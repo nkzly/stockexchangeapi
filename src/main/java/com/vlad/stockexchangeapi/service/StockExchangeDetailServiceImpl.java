@@ -36,6 +36,7 @@ public class StockExchangeDetailServiceImpl implements StockExchangeDetailServic
     }
 
     @Override
+    @Transactional
     public void addStockToExchange(long stockId, long exchangeId, String stockName, String stockExchangeName) {
         StockExchangeEmbededId id = new StockExchangeEmbededId(stockId, exchangeId);
 
