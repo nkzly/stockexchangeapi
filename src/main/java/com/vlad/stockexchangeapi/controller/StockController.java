@@ -36,7 +36,7 @@ public class StockController {
         return ResponseEntity.ok("Price updated.");
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<Stock>> getAllStocks() {
         List<Stock> stocks = stockService.getAllStocks();

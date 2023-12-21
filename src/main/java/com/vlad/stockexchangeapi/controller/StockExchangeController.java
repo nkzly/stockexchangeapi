@@ -69,7 +69,7 @@ public class StockExchangeController {
 
     @GetMapping
     public ResponseEntity<List<StockExchange>> getAllStocks() {
-        List<StockExchange> stocks = stockExchangeDetailService.getAllStockExchanges();
+        List<StockExchange> stocks = stockExchangeService.getAllStockExchanges();
         return ResponseEntity.ok(stocks);
     }
 

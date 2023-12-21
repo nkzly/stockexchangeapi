@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +25,6 @@ public class StockExchangeServiceImpl implements StockExchangeService{
 
         String stockExchangeName = request.getName();
         String description = request.getDescription();
-        // Check if a stock with the same name or description already exists
         if (stockExchangeRepository.existsByNameOrDescription(stockExchangeName, description)) {
             throw new ResourceAlreadyExistsException("Stock exchange with the same name or description already exists.");
         }
@@ -42,6 +43,11 @@ public class StockExchangeServiceImpl implements StockExchangeService{
             throw new ResourceNotFoundException("Stock Exchange not found with name: " + stockName);
         }
         return stockExchange;
+    }
+
+    @Override
+    public List<StockExchange> getAllStockExchanges() {
+        return stockExchangeRepository.findAll();
     }
 
 }

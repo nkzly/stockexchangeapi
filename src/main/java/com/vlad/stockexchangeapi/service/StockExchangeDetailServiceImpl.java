@@ -38,27 +38,29 @@ public class StockExchangeDetailServiceImpl implements StockExchangeDetailServic
     @Override
     @Transactional
     public void addStockToExchange(long stockId, long exchangeId, String stockName, String stockExchangeName) {
-        StockExchangeEmbededId id = new StockExchangeEmbededId(stockId, exchangeId);
+        {
+            StockExchangeEmbededId id = new StockExchangeEmbededId(stockId, exchangeId);
 
-        if (stockExchangeDetailRepository.existsById(id)) {
-            throw new ResourceAlreadyExistsException("Stock already in stock exchange");
+            if (stockExchangeDetailRepository.existsById(id)) {
+                throw new ResourceAlreadyExistsException("Stock already in stock exchange");
+            }
+
+            StockExchangeDetail stockExchangeDetail = new StockExchangeDetail();
+            stockExchangeDetail.setId(id);
+            stockExchangeDetail.setStockName(stockName);
+            stockExchangeDetail.setStockExchangeName(stockExchangeName);
+            stockExchangeDetail.setStartDate(new Timestamp(System.currentTimeMillis()));
+
+            stockExchangeDetailRepository.save(stockExchangeDetail);
+
+            long stockCount = stockExchangeDetailRepository.countByIdExchangeId(exchangeId);
+
+            stockExchangeRepository.findById(exchangeId).ifPresent(stockExchange -> {
+                boolean isLiveInMarket = stockCount >= 5;
+                stockExchange.setLiveInMarket(isLiveInMarket);
+                stockExchangeRepository.save(stockExchange);
+            });
         }
-
-        StockExchangeDetail stockExchangeDetail = new StockExchangeDetail();
-        stockExchangeDetail.setId(id);
-        stockExchangeDetail.setStockName(stockName);
-        stockExchangeDetail.setStockExchangeName(stockExchangeName);
-        stockExchangeDetail.setStartDate(new Timestamp(System.currentTimeMillis()));
-
-        stockExchangeDetailRepository.save(stockExchangeDetail);
-
-        long stockCount = stockExchangeDetailRepository.countByIdExchangeId(exchangeId);
-
-        stockExchangeRepository.findById(exchangeId).ifPresent(stockExchange -> {
-            boolean isLiveInMarket = stockCount >= 5;
-            stockExchange.setLiveInMarket(isLiveInMarket);
-            stockExchangeRepository.save(stockExchange);
-        });
     }
 
     @Override
@@ -112,10 +114,5 @@ public class StockExchangeDetailServiceImpl implements StockExchangeDetailServic
         } else {
             throw new ResourceNotFoundException("Stock Exchange not found: " + stockExchangeName);
         }
-    }
-
-    @Override
-    public List<StockExchange> getAllStockExchanges() {
-        return stockExchangeRepository.findAll();
     }
 }

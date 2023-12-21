@@ -77,7 +77,7 @@ class StockExchangeControllerTest {
 
     @Test
     void getAllStocks() throws Exception {
-        when(stockExchangeDetailService.getAllStockExchanges()).thenReturn(
+        when(stockExchangeService.getAllStockExchanges()).thenReturn(
                 Arrays.asList(new StockExchange(1,"NASDAQ","",true), new StockExchange(2,"NYSE","",false))
         );
 

@@ -7,15 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface StockExchangeDetailService {
+
     void addStockToExchange(long stockId, long exchangeId, String stockName, String stockExchangeName);
 
     List<Stock> getStocksByStockExchange(Long exchangeId);
 
-    @Transactional
     void removeStockFromExchange(String stockExchangeName, String stockName);
 
-    @Transactional
     void removeStockExchange(String stockExchangeName);
 
-    List<StockExchange> getAllStockExchanges();
 }

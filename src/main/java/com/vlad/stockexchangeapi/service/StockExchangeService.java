@@ -12,4 +12,6 @@ public interface StockExchangeService {
     StockExchange addStockExchange(StockExchangeRequest request);
     StockExchange findStockExchangeByName(String stockName);
 
+    List<StockExchange> getAllStockExchanges();
+
 }

@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 class StockControllerTest {
 
+    public static final BigDecimal CURRENT_PRICE = BigDecimal.valueOf(150.0);
     private final StockService stockService = Mockito.mock(StockService.class);
     private final StockController stockController = new StockController(stockService);
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -30,7 +31,7 @@ class StockControllerTest {
     void addStock() throws Exception {
         StockRequest stockRequest = new StockRequest();
         stockRequest.setName("AAPL");
-        stockRequest.setCurrentPrice(BigDecimal.valueOf(150.0));
+        stockRequest.setCurrentPrice(CURRENT_PRICE);
 
         when(stockService.addStock(any(StockRequest.class)))
                 .thenReturn(new Stock(1,stockRequest.getName(), "APPLE", stockRequest.getCurrentPrice(), null));
@@ -46,7 +47,7 @@ class StockControllerTest {
     void updateCurrentPrice() throws Exception {
         UpdatePriceRequest updatePriceRequest = new UpdatePriceRequest();
         updatePriceRequest.setStockName("AAPL");
-        updatePriceRequest.setNewPrice(BigDecimal.valueOf(160.0));
+        updatePriceRequest.setNewPrice(CURRENT_PRICE);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/stock")
                         .contentType(MediaType.APPLICATION_JSON)

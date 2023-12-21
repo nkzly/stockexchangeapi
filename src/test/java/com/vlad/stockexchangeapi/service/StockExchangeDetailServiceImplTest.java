@@ -100,15 +100,4 @@ class StockExchangeDetailServiceImplTest {
                 () -> stockExchangeDetailService.removeStockExchange(stockExchangeName));
     }
 
-    @Test
-    void getAllStockExchanges() {
-        StockExchange stockExchange1 = new StockExchange(1L, "NASDAQ", null, false);
-        StockExchange stockExchange2 = new StockExchange(2L, "NYSE", null, false);
-
-        when(stockExchangeRepository.findAll()).thenReturn(Arrays.asList(stockExchange1, stockExchange2));
-
-        List<StockExchange> stockExchanges = stockExchangeDetailService.getAllStockExchanges();
-
-        assertEquals(2, stockExchanges.size());
-    }
 }
