@@ -6,13 +6,14 @@ import com.vlad.stockexchangeapi.model.StockExchangeRequest;
 import com.vlad.stockexchangeapi.service.StockExchangeDetailService;
 import com.vlad.stockexchangeapi.service.StockExchangeService;
 import com.vlad.stockexchangeapi.service.StockService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/stock-exchange")
 public class StockExchangeController {
@@ -20,12 +21,6 @@ public class StockExchangeController {
     private final StockExchangeService stockExchangeService;
     private final StockService stockService;
     private final StockExchangeDetailService stockExchangeDetailService;
-
-    public StockExchangeController(StockExchangeService stockExchangeService, StockService stockService, StockExchangeDetailService stockExchangeDetailService) {
-        this.stockExchangeService = stockExchangeService;
-        this.stockService = stockService;
-        this.stockExchangeDetailService = stockExchangeDetailService;
-    }
 
     @PostMapping
     public ResponseEntity<String> addStockToExchange(@RequestParam String stockName, @RequestParam String stockExchangeName) {

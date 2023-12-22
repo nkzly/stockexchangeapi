@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class StockExchangeServiceImpl implements StockExchangeService{
 
     private final StockExchangeRepository stockExchangeRepository;

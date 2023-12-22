@@ -6,6 +6,7 @@ import com.vlad.stockexchangeapi.mapper.StockMapper;
 import com.vlad.stockexchangeapi.model.StockRequest;
 import com.vlad.stockexchangeapi.model.UpdatePriceRequest;
 import com.vlad.stockexchangeapi.service.StockService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/stock")
 public class StockController {
 
     private final StockService stockService;
-
-    public StockController(StockService stockService) {
-        this.stockService = stockService;
-    }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addStock(@RequestBody @Valid StockRequest request) {
