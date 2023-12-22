@@ -14,7 +14,7 @@ public interface StockExchangeDetailRepository extends JpaRepository<StockExchan
 
     List<StockExchangeDetail> findByIdExchangeId(long exchangeId);
 
-
+    List<StockExchangeDetail> findByStockName(String stockName);
 
     long countByIdExchangeId(long exchangeId);
 

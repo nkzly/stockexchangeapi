@@ -6,6 +6,7 @@ import com.vlad.stockexchangeapi.exception.ResourceNotFoundException;
 import com.vlad.stockexchangeapi.mapper.StockMapper;
 import com.vlad.stockexchangeapi.model.StockRequest;
 import com.vlad.stockexchangeapi.repository.StockRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +14,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
-
-    public StockServiceImpl(StockRepository stockRepository) {
-        this.stockRepository = stockRepository;
-    }
 
     @Override
     public Stock addStock(StockRequest request) {

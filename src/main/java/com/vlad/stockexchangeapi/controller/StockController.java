@@ -7,10 +7,10 @@ import com.vlad.stockexchangeapi.model.StockRequest;
 import com.vlad.stockexchangeapi.model.UpdatePriceRequest;
 import com.vlad.stockexchangeapi.service.StockService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,14 +24,14 @@ public class StockController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> addStock(@RequestBody StockRequest request) {
+    public ResponseEntity<String> addStock(@RequestBody @Valid StockRequest request) {
         Stock createdStock = stockService.addStock(request);
         StockRequest responseDTO = StockMapper.INSTANCE.toRequest(createdStock);
         return ResponseEntity.ok("Stock added.");
     }
 
     @PutMapping
-    public ResponseEntity<String> updateCurrentPrice(@RequestBody UpdatePriceRequest updatePriceRequest) {
+    public ResponseEntity<String> updateCurrentPrice(@RequestBody @Valid UpdatePriceRequest updatePriceRequest) {
         stockService.updateCurrentPrice(updatePriceRequest.getStockName(), updatePriceRequest.getNewPrice());
         return ResponseEntity.ok("Price updated.");
     }
@@ -47,6 +47,7 @@ public class StockController {
     @DeleteMapping("/{stockName}")
     public ResponseEntity<String> deleteStockByName(@PathVariable String stockName) {
         stockService.deleteStockByName(stockName);
+        //need to delete from excchangedetail table , and change liveonmarket status as count of stock
         return ResponseEntity.ok("Stock removed.");
     }
 

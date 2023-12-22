@@ -9,6 +9,7 @@ import com.vlad.stockexchangeapi.exception.ResourceNotFoundException;
 import com.vlad.stockexchangeapi.repository.StockExchangeDetailRepository;
 import com.vlad.stockexchangeapi.repository.StockExchangeRepository;
 import com.vlad.stockexchangeapi.repository.StockRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,21 +20,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StockExchangeDetailServiceImpl implements StockExchangeDetailService {
 
     private final StockRepository stockRepository;
     private final StockExchangeRepository stockExchangeRepository;
     private final StockExchangeDetailRepository stockExchangeDetailRepository;
-
-    @Autowired
-    public StockExchangeDetailServiceImpl(
-            StockExchangeDetailRepository stockExchangeDetailRepository,
-            StockExchangeRepository stockExchangeRepository,
-            StockRepository stockRepository) {
-        this.stockExchangeDetailRepository = stockExchangeDetailRepository;
-        this.stockExchangeRepository = stockExchangeRepository;
-        this.stockRepository = stockRepository;
-    }
 
     @Override
     @Transactional
@@ -115,4 +107,5 @@ public class StockExchangeDetailServiceImpl implements StockExchangeDetailServic
             throw new ResourceNotFoundException("Stock Exchange not found: " + stockExchangeName);
         }
     }
+
 }
